@@ -1,5 +1,3 @@
-
-
 public class RMatrix
 {
     public int columns, rows;
@@ -10,7 +8,20 @@ public class RMatrix
         columns = c;
         rows = r;
         matrix = new double[r][c];
-        //matrix=input;
+
+        if (input.length != rows)
+        {
+            throw new ArithmeticException("Invalid Matrix\n");
+        } else
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                if (input[i].length != columns)
+                {
+                    throw new ArithmeticException("Invalid Matrix\n");
+                }
+            }
+        }
 
         for (int i = 0; i < rows; i++)
         {
@@ -55,6 +66,17 @@ public class RMatrix
                     j2++;
                 }
                 matrix[i][j] = old.matrix[i2][j2];
+            }
+        }
+    }
+
+    public void setprecision(int decimalpoints)
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                matrix[i][j] = Math.round(matrix[i][j] * Math.pow(10, decimalpoints)) / Math.pow(10, decimalpoints);
             }
         }
     }
@@ -188,12 +210,10 @@ public class RMatrix
 
     public static RMatrix cofactor(RMatrix a)
     {
-        if (a.columns != a.rows)
+        RMatrix temp = new RMatrix(0, a.rows, a.columns);
+        if (a.columns == a.rows)
         {
-            throw new ArithmeticException("Matrix operation is not permitted");
-        } else
-        {
-            RMatrix temp = new RMatrix(0, a.rows, a.columns);
+
             for (int i = 0; i < a.rows; i++)
             {
                 for (int j = 0; j < a.columns; j++)
@@ -202,32 +222,69 @@ public class RMatrix
                 }
             }
 
-            return temp;
+        } else
+        {
+            throw new ArithmeticException("Matrix operation is not permitted");
         }
+        return temp;
     }
 
     public static RMatrix adjoint(RMatrix a)
     {
-        if (a.columns != a.rows)
-        {
-            throw new ArithmeticException("Matrix operation is not permitted");
-        } else
+        if (a.columns == a.rows)
         {
             return transpose(cofactor(a));
+        } else
+        {
+            throw new ArithmeticException("Matrix operation is not permitted");
         }
     }
 
     public static RMatrix inverse(RMatrix a)
     {
         double determinant = a.det();
-        if (a.columns != a.rows || determinant == 0)
-        {
-            throw new ArithmeticException("Matrix operation is not permitted");
-        } else
+        if (a.columns == a.rows && determinant != 0)
         {
             RMatrix temp = adjoint(a);
             temp.scalar_mult(1 / determinant);
             return temp;
+        } else
+        {
+            throw new ArithmeticException("Matrix operation is not permitted");
+        }
+    }
+
+    public static RMatrix barycentric(RMatrix a, RMatrix b)
+    {
+        a=RMatrix.transpose(a);
+        RMatrix temp = new RMatrix(0, a.rows+1, a.columns);
+
+        if (a.columns  == a.rows+1 && b.columns == 1 && b.rows == a.columns)
+        {
+            for (int i = 0; i < temp.rows - 1; i++)
+            {
+                for (int j = 0; j < temp.columns; j++)
+                {
+                    temp.matrix[i][j] = a.matrix[i][j];
+                }
+            }
+            for (int j = 0; j < temp.columns; j++)
+            {
+                temp.matrix[temp.rows - 1][j] = 1;
+            }
+        } else
+        {
+            throw new ArithmeticException("Matrix operation is not permitted");
+        }
+
+        if(temp.det()!=0)
+        {
+            temp = RMatrix.inverse(temp);
+            temp = RMatrix.multiply(temp, b);
+            return temp;
+        } else
+        {
+            throw new ArithmeticException("Matrix operation is not permitted");
         }
     }
 
@@ -297,14 +354,14 @@ public class RMatrix
                 }
             }
 
-//            //Test code
-//            for (int i = 0; i < a.rows; i++)
-//            {
-//                for(int j=i+1;j<a.rows;j++)
-//                {
-//                    System.out.println(dotproduct(ortho[i],ortho[j]));
-//                }
-//            }
+            //            //Test code
+            //            for (int i = 0; i < a.rows; i++)
+            //            {
+            //                for(int j=i+1;j<a.rows;j++)
+            //                {
+            //                    System.out.println(dotproduct(ortho[i],ortho[j]));
+            //                }
+            //            }
 
         } else
         {
