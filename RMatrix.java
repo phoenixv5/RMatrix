@@ -160,7 +160,6 @@ public class RMatrix
                     {
                         temp.matrix[i][j] += a.matrix[i][k] * b.matrix[k][j];
                     }
-                    //temp.matrix[i][j] += a.matrix[i][j];
                 }
             }
             temp.columns = b.columns;
@@ -247,40 +246,6 @@ public class RMatrix
         {
             RMatrix temp = adjoint(a);
             temp.scalar_mult(1 / determinant);
-            return temp;
-        } else
-        {
-            throw new ArithmeticException("Matrix operation is not permitted");
-        }
-    }
-
-    public static RMatrix barycentric(RMatrix a, RMatrix b)
-    {
-        a = RMatrix.transpose(a);
-        RMatrix temp = new RMatrix(0, a.rows + 1, a.columns);
-
-        if (a.columns == a.rows + 1 && b.columns == 1 && b.rows == a.columns)
-        {
-            for (int i = 0; i < temp.rows - 1; i++)
-            {
-                for (int j = 0; j < temp.columns; j++)
-                {
-                    temp.matrix[i][j] = a.matrix[i][j];
-                }
-            }
-            for (int j = 0; j < temp.columns; j++)
-            {
-                temp.matrix[temp.rows - 1][j] = 1;
-            }
-        } else
-        {
-            throw new ArithmeticException("Matrix operation is not permitted");
-        }
-
-        if (temp.det() != 0)
-        {
-            temp = RMatrix.inverse(temp);
-            temp = RMatrix.multiply(temp, b);
             return temp;
         } else
         {
