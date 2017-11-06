@@ -256,10 +256,10 @@ public class RMatrix
 
     public static RMatrix barycentric(RMatrix a, RMatrix b)
     {
-        a=RMatrix.transpose(a);
-        RMatrix temp = new RMatrix(0, a.rows+1, a.columns);
+        a = RMatrix.transpose(a);
+        RMatrix temp = new RMatrix(0, a.rows + 1, a.columns);
 
-        if (a.columns  == a.rows+1 && b.columns == 1 && b.rows == a.columns)
+        if (a.columns == a.rows + 1 && b.columns == 1 && b.rows == a.columns)
         {
             for (int i = 0; i < temp.rows - 1; i++)
             {
@@ -277,7 +277,7 @@ public class RMatrix
             throw new ArithmeticException("Matrix operation is not permitted");
         }
 
-        if(temp.det()!=0)
+        if (temp.det() != 0)
         {
             temp = RMatrix.inverse(temp);
             temp = RMatrix.multiply(temp, b);
