@@ -32,7 +32,7 @@ public class RMatrix
         }
     }
 
-    RMatrix(int fill, int r, int c)
+    RMatrix(double fill, int r, int c)
     {
         columns = c;
         rows = r;
