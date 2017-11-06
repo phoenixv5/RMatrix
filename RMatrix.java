@@ -318,16 +318,6 @@ public class RMatrix
                     temp.matrix[i][j] = ortho[i].matrix[0][j];
                 }
             }
-
-            //            //Test code
-            //            for (int i = 0; i < a.rows; i++)
-            //            {
-            //                for(int j=i+1;j<a.rows;j++)
-            //                {
-            //                    System.out.println(dotproduct(ortho[i],ortho[j]));
-            //                }
-            //            }
-
         } else
         {
             throw new ArithmeticException("Matrix operation is not permitted\n");
@@ -335,5 +325,6 @@ public class RMatrix
         return temp;
     }
 }
+
 
 // Coded by Rishi K.S
