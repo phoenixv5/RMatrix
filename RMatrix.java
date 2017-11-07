@@ -81,18 +81,34 @@ public class RMatrix
         }
     }
 
-    public void display()
+    public void display(int decimalpoints)
     {
-        for (int i = 0; i < rows; i++)
+        if (decimalpoints <= 0)
         {
-            for (int j = 0; j < columns; j++)
+            for (int i = 0; i < rows; i++)
             {
-                System.out.print(matrix[i][j]);
-                System.out.print("  ");
+                for (int j = 0; j < columns; j++)
+                {
+                    System.out.print(matrix[i][j]);
+                    System.out.print("  ");
+                }
+                System.out.print("\n");
             }
             System.out.print("\n");
         }
-        System.out.print("\n");
+        else
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    System.out.print(Math.round(matrix[i][j] * Math.pow(10, decimalpoints)) / Math.pow(10, decimalpoints));
+                    System.out.print("  ");
+                }
+                System.out.print("\n");
+            }
+            System.out.print("\n");
+        }
     }
 
     public void scalar_mult(double n)
