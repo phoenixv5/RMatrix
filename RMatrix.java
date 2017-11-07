@@ -70,20 +70,20 @@ public class RMatrix
         }
     }
 
-    public void setprecision(int decimalpoints)
+    public void setprecision(int dp)
     {
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
             {
-                matrix[i][j] = Math.round(matrix[i][j] * Math.pow(10, decimalpoints)) / Math.pow(10, decimalpoints);
+                matrix[i][j] = Math.round(matrix[i][j] * Math.pow(10, dp)) / Math.pow(10, dp);
             }
         }
     }
 
-    public void display(int decimalpoints)
+    public void display(int dp)
     {
-        if (decimalpoints <= 0)
+        if (dp <= 0)
         {
             for (int i = 0; i < rows; i++)
             {
@@ -102,7 +102,7 @@ public class RMatrix
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    System.out.print(Math.round(matrix[i][j] * Math.pow(10, decimalpoints)) / Math.pow(10, decimalpoints));
+                    System.out.print(Math.round(matrix[i][j] * Math.pow(10, dp)) / Math.pow(10, dp));
                     System.out.print("  ");
                 }
                 System.out.print("\n");
@@ -161,7 +161,6 @@ public class RMatrix
         return temp;
     }
 
-
     public static RMatrix multiply(RMatrix a, RMatrix b)
     {
         RMatrix temp = new RMatrix(0, a.rows, b.columns);
@@ -217,7 +216,10 @@ public class RMatrix
             double determinant = 0;
             for (int i = 0; i < columns; i++)
             {
-                determinant += matrix[0][i] * (new RMatrix(this, 0, i).det()) * java.lang.Math.pow(-1, (i));
+                determinant +=
+                        matrix[0][i]
+                        * (new RMatrix(this, 0, i).det())
+                        * Math.pow(-1, (i));
             }
             return determinant;
         }
@@ -233,7 +235,7 @@ public class RMatrix
             {
                 for (int j = 0; j < a.columns; j++)
                 {
-                    temp.matrix[i][j] = (new RMatrix(a, i, j)).det() * java.lang.Math.pow(-1, (i + j));
+                    temp.matrix[i][j] = (new RMatrix(a, i, j)).det() * Math.pow(-1, (i + j));
                 }
             }
 
@@ -341,5 +343,6 @@ public class RMatrix
         return temp;
     }
 }
+
 
 // Coded by Rishi K.S
