@@ -12,7 +12,8 @@ public class RMatrix
         if (input.length != rows)
         {
             throw new ArithmeticException("Invalid Matrix\n");
-        } else
+        }
+        else
         {
             for (int i = 0; i < rows; i++)
             {
@@ -125,6 +126,7 @@ public class RMatrix
     public static RMatrix add(RMatrix a, RMatrix b)
     {
         RMatrix temp = new RMatrix(a.rows, a.columns, a.matrix);
+
         if (a.columns == b.columns && a.rows == b.rows)
         {
             for (int i = 0; i < a.rows; i++)
@@ -134,7 +136,8 @@ public class RMatrix
                     temp.matrix[i][j] += b.matrix[i][j];
                 }
             }
-        } else
+        }
+        else
         {
             throw new ArithmeticException("Matrix operation is not permitted\n");
         }
@@ -144,6 +147,7 @@ public class RMatrix
     public static RMatrix sub(RMatrix a, RMatrix b)
     {
         RMatrix temp = new RMatrix(a.rows, a.columns, a.matrix);
+
         if (a.columns == b.columns && a.rows == b.rows)
         {
             for (int i = 0; i < a.rows; i++)
@@ -153,7 +157,8 @@ public class RMatrix
                     temp.matrix[i][j] -= b.matrix[i][j];
                 }
             }
-        } else
+        }
+        else
         {
             throw new ArithmeticException("Matrix operation is not permitted\n");
         }
@@ -180,7 +185,8 @@ public class RMatrix
             temp.columns = b.columns;
             temp.rows = a.rows;
 
-        } else
+        }
+        else
         {
             throw new ArithmeticException("Matrix operation is not permitted\n");
         }
@@ -208,18 +214,20 @@ public class RMatrix
         if (columns != rows)
         {
             throw new ArithmeticException("Determinant not defined");
-        } else if (columns == 1)
+        }
+        else if (columns == 1)
         {
             return matrix[0][0];
-        } else
+        }
+        else
         {
             double determinant = 0;
             for (int i = 0; i < columns; i++)
             {
                 determinant +=
                         matrix[0][i]
-                        * (new RMatrix(this, 0, i).det())
-                        * Math.pow(-1, (i));
+                                * (new RMatrix(this, 0, i).det())
+                                * Math.pow(-1, (i));
             }
             return determinant;
         }
@@ -228,6 +236,7 @@ public class RMatrix
     public static RMatrix cofactor(RMatrix a)
     {
         RMatrix temp = new RMatrix(0, a.rows, a.columns);
+
         if (a.columns == a.rows)
         {
 
@@ -239,7 +248,8 @@ public class RMatrix
                 }
             }
 
-        } else
+        }
+        else
         {
             throw new ArithmeticException("Matrix operation is not permitted");
         }
@@ -251,7 +261,8 @@ public class RMatrix
         if (a.columns == a.rows)
         {
             return transpose(cofactor(a));
-        } else
+        }
+        else
         {
             throw new ArithmeticException("Matrix operation is not permitted");
         }
@@ -260,12 +271,14 @@ public class RMatrix
     public static RMatrix inverse(RMatrix a)
     {
         double determinant = a.det();
+
         if (a.columns == a.rows && determinant != 0)
         {
             RMatrix temp = adjoint(a);
             temp.scalar_mult(1 / determinant);
             return temp;
-        } else
+        }
+        else
         {
             throw new ArithmeticException("Matrix operation is not permitted");
         }
@@ -274,13 +287,15 @@ public class RMatrix
     public static double dotproduct(RMatrix a, RMatrix b)
     {
         double temp = 0;
+
         if (a.columns == b.columns && a.rows == b.rows && a.rows == 1)
         {
             for (int i = 0; i < a.columns; i++)
             {
                 temp += a.matrix[0][i] * b.matrix[0][i];
             }
-        } else
+        }
+        else
         {
             throw new ArithmeticException("Matrix operation is not permitted\n");
         }
@@ -291,13 +306,15 @@ public class RMatrix
     {
         double scalar = (dotproduct(a, b) / dotproduct(a, a));
         RMatrix temp = new RMatrix(0, a.rows, a.columns);
+
         if (a.columns == b.columns && a.rows == b.rows && a.rows == 1)
         {
             for (int i = 0; i < a.columns; i++)
             {
                 temp.matrix[0][i] = scalar * a.matrix[0][i];
             }
-        } else
+        }
+        else
         {
             throw new ArithmeticException("Matrix operation is not permitted\n");
         }
@@ -307,6 +324,7 @@ public class RMatrix
     public static RMatrix gramschmidt(RMatrix a)
     {
         RMatrix temp = new RMatrix(0, a.rows, a.columns);
+
         if (a.columns == a.rows)
         {
 
@@ -336,13 +354,12 @@ public class RMatrix
                     temp.matrix[i][j] = ortho[i].matrix[0][j];
                 }
             }
-        } else
+        }
+        else
         {
             throw new ArithmeticException("Matrix operation is not permitted\n");
         }
         return temp;
     }
 }
-
-
 // Coded by Rishi K.S
